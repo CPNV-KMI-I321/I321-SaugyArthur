@@ -1,5 +1,3 @@
-
-
 # Observations étape 01
 
 ## Données
@@ -22,3 +20,12 @@ price en float, (DECIMAL (4,2)), evnt. arrondi à 0.05
 image_path, string
 
 of_the_day, boolean, evnt. règle qu'une ligne pizza peut être du moment
+
+
+## Routes
+
+(Seulement pour l'image)
+
+GET /api/pizzas/pizza_of_the_day
+
+GET /api/pizzas/
