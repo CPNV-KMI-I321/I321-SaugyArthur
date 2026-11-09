@@ -6,7 +6,8 @@ export function list(req, res) {
 }
 
 export function get(req, res) {
-  fail(501, 'TODO : consulter la ressource');
+  // fail(501, 'TODO : consulter la ressource');
+  
 }
 
 export function create(req, res) {
