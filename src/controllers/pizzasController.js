@@ -27,6 +27,7 @@ export function update(req, res) {
 
   const pizza = Pizza.update(id, data)
   if (pizza === undefined) return fail(404, "Pizza introuvable")
+  res.json(pizza)
 }
 
 export function remove(req, res) {
@@ -34,4 +35,5 @@ export function remove(req, res) {
 
   const pizza = Pizza.remove(id)
   if (pizza === undefined) return fail(404, "Pizza introuvable")
+  res.json(pizza)
 }
