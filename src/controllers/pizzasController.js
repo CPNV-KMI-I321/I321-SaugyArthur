@@ -18,7 +18,7 @@ export function create(req, res) {
 
   const pizza = Pizza.create(data)
 
-  res.json(pizza)
+  res.status(201).location(`/api/pizzas/${pizza.id}`).json(pizza)
 }
 
 export function update(req, res) {
@@ -34,6 +34,6 @@ export function remove(req, res) {
   const id = validateId(req.params.id)
 
   const pizza = Pizza.remove(id)
-  if (pizza === undefined) return fail(404, "Pizza introuvable")
-  res.json(pizza)
+  if (!pizza) return fail(404, "Pizza introuvable")
+  res.status(204).end()
 }
