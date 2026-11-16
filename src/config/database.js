@@ -2,7 +2,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
-const path = process.env.DB_PATH || './data/foodtruck.sqlite';
+const path = process.env.DB_PATH || './data/starter-3.sqlite';
 if (path !== ':memory:') mkdirSync(dirname(resolve(path)), { recursive: true });
 export const db = new DatabaseSync(path);
 db.exec(`

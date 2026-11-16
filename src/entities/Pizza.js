@@ -24,3 +24,7 @@ export function update(id, { name, description, price, imageUrl }) {
 export function remove(id) {
   return db.prepare('DELETE FROM pizzas WHERE id = ?').run(id).changes > 0;
 }
+
+export function findByName(name) {
+  throw Object.assign(new Error('TODO : rechercher le nom avec NOCASE'), { status: 501 });
+}

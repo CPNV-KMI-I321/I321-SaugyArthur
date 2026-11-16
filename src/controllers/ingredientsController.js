@@ -7,7 +7,7 @@ export function list(req, res) {
 
 export function get(req, res) {
   const ingredient = Ingredient.findById(validateId(req.params.id));
-  if (!ingredient) fail(404, 'Ingrédient introuvable.');
+  if (!ingredient) fail(404, 'Ingredient introuvable.');
   res.json(ingredient);
 }
 
@@ -18,11 +18,11 @@ export function create(req, res) {
 
 export function update(req, res) {
   const id = validateId(req.params.id);
-  if (!Ingredient.findById(id)) fail(404, 'Ingrédient introuvable.');
+  if (!Ingredient.findById(id)) fail(404, 'Ingredient introuvable.');
   res.json(Ingredient.update(id, validateIngredient(req.body)));
 }
 
 export function remove(req, res) {
-  if (!Ingredient.remove(validateId(req.params.id))) fail(404, 'Ingrédient introuvable.');
+  if (!Ingredient.remove(validateId(req.params.id))) fail(404, 'Ingredient introuvable.');
   res.sendStatus(204);
 }
