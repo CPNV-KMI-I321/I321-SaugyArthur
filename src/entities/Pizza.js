@@ -26,5 +26,5 @@ export function remove(id) {
 }
 
 export function findByName(name) {
-  throw Object.assign(new Error('TODO : rechercher le nom avec NOCASE'), { status: 501 });
+  return db.prepare('SELECT * FROM pizzas WHERE name = ? COLLATE NOCASE').get(name);
 }
