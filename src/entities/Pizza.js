@@ -5,28 +5,22 @@ export function findAll() {
 }
 
 export function findById(id) {
-  return db.prepare('SELECT * FROM pizzas WHERE id=?').get(id)
+  return db.prepare('SELECT * FROM pizzas WHERE id = ?').get(id);
 }
 
-export function create(data) {
-  const { lastInsertRowid } = db
-    .prepare('INSERT INTO pizzas(name, description, price, imageUrl) VALUES (?, ?, ?, ?)')
-    .run(data.name, data.description, data.price, data.imageUrl)
-  return findById(lastInsertRowid)
+export function create({ name, description, price, imageUrl }) {
+  const result = db.prepare(`
+    INSERT INTO pizzas (name, description, price, imageUrl) VALUES (?, ?, ?, ?)
+  `).run(name, description, price, imageUrl);
+  return findById(Number(result.lastInsertRowid));
 }
 
-export function update(id, data) {
-  const { changes } = db
-    .prepare('UPDATE pizzas SET name=?, description=?, price=?, imageUrl=? WHERE id=?')
-    .run(data.name, data.description, data.price, data.imageUrl, id)
-  if (changes > 0) {
-    return findById(id)
-  } else {
-    return undefined
-  }
+export function update(id, { name, description, price, imageUrl }) {
+  db.prepare(`UPDATE pizzas SET name = ?, description = ?, price = ?, imageUrl = ? WHERE id = ?`)
+    .run(name, description, price, imageUrl, id);
+  return findById(id);
 }
 
 export function remove(id) {
-  const { changes } = db.prepare('DELETE FROM pizzas WHERE id=?').run(id)
-  return changes > 0
+  return db.prepare('DELETE FROM pizzas WHERE id = ?').run(id).changes > 0;
 }
