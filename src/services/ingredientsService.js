@@ -1,25 +1,37 @@
-import { fail } from '../validation.js';
+import * as Ingredient from '../entities/Ingredient.js';
+import * as PizzaComposition from '../entities/PizzaComposition.js';
+import { fail, validateId, validateIngredient } from '../validation.js';
 
 export function list() {
-  fail(501, 'TODO : implémenter ingredientsService.list');
+  return Ingredient.findAll();
 }
 
 export function get(id) {
-  fail(501, 'TODO : implémenter ingredientsService.get');
+  const ingredient = Ingredient.findById(validateId(id));
+  if (!ingredient) fail(404, 'Ingrédient introuvable.');
+  return ingredient;
 }
 
 export function create(body) {
-  fail(501, 'TODO : implémenter ingredientsService.create');
+  return Ingredient.create(validateIngredient(body));
 }
 
 export function update(id, body) {
-  fail(501, 'TODO : implémenter ingredientsService.update');
+  const ingredientId = get(id).id;
+  return Ingredient.update(ingredientId, validateIngredient(body));
 }
 
 export function remove(id) {
-  fail(501, 'TODO : implémenter ingredientsService.remove');
+  const ingredientId = get(id).id;
+  if (PizzaComposition.isUsed(ingredientId)) {
+    fail(409, 'Ingrédient utilisé par au moins une pizza.');
+  }
+  Ingredient.remove(ingredientId);
 }
 
 export function ensureExist(ids) {
-  fail(501, 'TODO : vérifier les ingrédients référencés');
+  const missing = ids.filter(id => !Ingredient.findById(id));
+  if (missing.length > 0) {
+    fail(400, `Ingrédient(s) introuvable(s) : ${missing.join(', ')}.`);
+  }
 }
